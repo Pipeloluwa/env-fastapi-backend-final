@@ -12,6 +12,7 @@ POSTGRES_SERVER : str = os.getenv("POSTGRES_SERVER","localhost")
 POSTGRES_PORT : str = os.getenv("POSTGRES_PORT")
 POSTGRES_DB : str = os.getenv("POSTGRES_DB")
 
+POSTGRES_URL : str = os.getenv("POSTGRES_URL")
 
 DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}"
 engine= create_engine(DATABASE_URL)
