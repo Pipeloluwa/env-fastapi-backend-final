@@ -1,26 +1,39 @@
 import pyrebase
 import os
-import mimetypes
+import base64
+import json
 from loguru import logger
 from fastapi.responses import FileResponse
 from fastapi import status, Response, HTTPException
 from .import file_names_processing
+from json_to_env_to_json import decodeENV
 from PIL import Image, ImageOps
 from dotenv import load_dotenv
 load_dotenv()
 
 
+#Now get the value of encoded service account that was copied and created in the .env, get it back and convert the encoded string back to JSON
+encoded_key= os.getenv("FIREBASE_SERVICE_ACCOUNT_KEY")
+
+# remove the first two chars and the last char in the key
+encoded_key_trimmed= str(encoded_key)[2:-1]
+
+#decode
+decode_encoded_key= base64.b64decode(encoded_key_trimmed).decode('utf-8')
+
+service_account= decodeENV()
 
 config:dict = {
-    "apiKey": os.getenv('API_KEY'),
-    "authDomain": os.getenv('AUTH_DOMAIN'),
-    "project_id": os.getenv('PROJECT_ID'),
-    "storageBucket": os.getenv('STORAGE_BUCKET'),
-    "messagingSenderId": os.getenv('MESSAGING_SENDER_ID'),
-    "appId": os.getenv('APP_ID'),
-    "measurementId": os.getenv('MEASUREMENT_ID'),
-    "databaseURL": os.getenv('DATABASE_URL'),
-    "serviceAccount": 'service-account.json'
+    "apiKey": os.getenv('FIREBASE_STORAGE_API_KEY'),
+    "authDomain": os.getenv('FIREBASE_STORAGE_AUTH_DOMAIN'),
+    "project_id": os.getenv('FIREBASE_STORAGE_PROJECT_ID'),
+    "storageBucket": os.getenv('FIREBASE_STORAGE_STORAGE_BUCKET'),
+    "messagingSenderId": os.getenv('FIREBASE_STORAGE_MESSAGING_SENDER_ID'),
+    "appId": os.getenv('FIREBASE_STORAGE_APP_ID'),
+    "measurementId": os.getenv('FIREBASE_STORAGE_MEASUREMENT_ID'),
+    "databaseURL": os.getenv('FIREBASE_STORAGE_DATABASE_URL'),
+    # "serviceAccount": os.getenv('FIREBASE_SERVICE_ACCOUNT')
+    "serviceAccount": service_account
 }
 
 
