@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 #Noctis high contrast  MY VS CODE THEME
 
 app=FastAPI()
-origins = ["http://localhost:3000", "http://ec2-174-129-80-5.compute-1.amazonaws.com"]
+origins = ["http://localhost:3000", "https://env-react-frontend-final.vercel.app/"]
 
 app.add_middleware(
     CORSMiddleware,
